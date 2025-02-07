@@ -12,6 +12,7 @@ def lambda_handler(event,context):
     # Code added from CI CD
     input_bucket = event['Records'][0]['s3']['bucket']['name']
     input_key  = event['Records'][0]['s3']['object']['key']
+    #print("Bucket: {input_bucket}, Object: {object_key}")
     s3 = boto3.client('s3')
     obj = s3.get_object(Bucket = input_bucket, Key = input_key )
     body = obj['Body'].read()
@@ -34,6 +35,7 @@ def lambda_handler(event,context):
     bucket = s3.Bucket(bucket_name)
     
     bucket.upload_file('/tmp/test.csv', file_name)
+    print('file has been uploaded')
 
     # sns to deliver file processed request
     sns = boto3.client('sns')
